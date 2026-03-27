@@ -62,26 +62,25 @@ self.addEventListener('fetch', event => {
   }
 
   // API de TMDB → Network first, fallback a cache
-  if (API_DOMAINS.some(d => url.hostname.includes(d))) {
+if (API_DOMAINS.some(d => url.hostname.includes(d))) {
     event.respondWith(
-      caches.open(CACHE_NAME).then(async cache => {
-        try {
-          const response = await fetch(event.request);
-          if (response.ok) cache.put(event.request, response.clone());
-          return response;
-        } catch {
-          const cached = await cache.match(event.request);
-          if (cached) return cached;
-          return new Response(
-            JSON.stringify({ error: 'Sin conexión y sin datos en cache.' }),
-            { headers: { 'Content-Type': 'application/json' }, status: 503 }
-          );
-        }
-      })
+        caches.open(CACHE_NAME).then(async cache => {
+            try {
+                const response = await fetch(event.request.clone()); // 👈 clonar el request
+                if (response.ok) cache.put(event.request, response.clone());
+                return response;
+            } catch {
+                const cached = await cache.match(event.request);
+                if (cached) return cached;
+                return new Response(
+                    JSON.stringify({ error: 'Sin conexión y sin datos en cache.' }),
+                    { headers: { 'Content-Type': 'application/json' }, status: 503 }
+                );
+            }
+        })
     );
     return;
-  }
-
+}
   // Fuentes de Google → Cache first
   if (url.hostname.includes('fonts.')) {
     event.respondWith(
