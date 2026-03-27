@@ -861,3 +861,89 @@ body {
   .explorar-btn { width: 100%; justify-content: center; }
   .explorar-grid { grid-template-columns: 1fr; }
 }
+
+/* ── TEMPORADAS Y CAPÍTULOS ── */
+.temp-resumen {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.temp-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.temp-card {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  background: var(--surface2);
+  border-radius: 14px;
+  padding: 12px;
+  transition: border-color 0.2s, transform 0.2s;
+  border: 1px solid var(--border);
+}
+
+.temp-card:hover {
+  border-color: rgba(232,201,109,0.25);
+  transform: translateY(-2px);
+}
+
+.temp-poster {
+  width: 54px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.temp-no-poster {
+  width: 54px;
+  height: 80px;
+  background: var(--surface);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  flex-shrink: 0;
+}
+
+.temp-info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  justify-content: center;
+}
+
+.temp-nombre {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.temp-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.temp-badge {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 100px;
+  color: var(--accent);
+  letter-spacing: 0.3px;
+}
+
+.temp-estreno {
+  font-size: 0.75rem;
+  color: var(--muted);
+} 
