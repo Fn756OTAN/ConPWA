@@ -1,11 +1,12 @@
 const CACHE_NAME = 'cinedetalle-v1';
 const CACHE_STATIC = [
-  '/',
-  '/index.html',
-  '/style.css',
-  '/app.js',
-  '/config.js',
-  '/manifest.json',
+  './',
+  './index.html',
+  './style.css',
+  './app.js',
+  './config.js',
+  './pwa.js',
+  './manifest.json',
   'https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap',
 ];
 
