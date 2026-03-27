@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CineDetalle</title>
+
+  <!-- PWA Meta Tags -->
+  <meta name="description" content="Información detallada de películas: elenco, duración y estadísticas"/>
+  <meta name="theme-color" content="#e8c96d"/>
+  <meta name="mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  <meta name="apple-mobile-web-app-title" content="CineDetalle"/>
+
+  <!-- Manifest -->
+  <link rel="manifest" href="manifest.json"/>
+
+  <!-- Apple Touch Icons (fallback para iOS) -->
+  <link rel="apple-touch-icon" sizes="192x192" href="icons/icon-192.png"/>
+  <link rel="apple-touch-icon" sizes="512x512" href="icons/icon-512.png"/>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png"/>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<!-- Banner de instalación -->
+<div id="install-banner" class="install-banner" style="display:none">
+  <div class="install-banner-content">
+    <div class="install-icon">🎬</div>
+    <div class="install-text">
+      <strong>Instalar CineDetalle</strong>
+      <span>Úsala sin conexión, como una app</span>
+    </div>
+  </div>
+  <div class="install-actions">
+    <button id="btn-install" class="btn-install-yes">Instalar</button>
+    <button id="btn-install-dismiss" class="btn-install-no">✕</button>
+  </div>
+</div>
+
+<!-- Estado de conexión -->
+<div id="offline-toast" class="offline-toast" style="display:none">
+  📡 Sin conexión — mostrando datos en caché
+</div>
+
+<div id="backdrop-bg"></div>
+
+<div class="wrapper">
+  <div id="loading">CARGANDO...</div>
+  <div id="app" style="display:none">
+
+    <div class="tabs-nav">
+      <button class="tab-btn active" onclick="switchTab('info', event)">🎬 Información</button>
+      <button class="tab-btn" onclick="switchTab('elenco', event)">🎭 Elenco</button>
+      <button class="tab-btn" onclick="switchTab('duracion', event)">⏱ Duración</button>
+      <button class="tab-btn" onclick="switchTab('explorar', event)">🔍 Explorar</button>
+    </div>
+
+    <div class="tab-content active" id="tab-info">
+      <div class="bento" id="bento-info"></div>
+    </div>
+
+    <div class="tab-content" id="tab-elenco">
+      <div class="cast-grid" id="cast-grid"></div>
+    </div>
+
+    <div class="tab-content" id="tab-duracion">
+      <div class="duracion-grid" id="duracion-grid"></div>
+    </div>
+
+    <!-- ── TAB: EXPLORAR ─────────────────────────────────── -->
+    <div class="tab-content" id="tab-explorar">
+
+      <form id="segunda" class="explorar-form">
+        <div class="explorar-fields">
+
+          <div class="explorar-field">
+            <label class="explorar-label" for="mas">Categoría</label>
+            <select id="mas" class="explorar-select">
+              <option value="popular">🔥 Popular</option>
+              <option value="top_rated">⭐ Mejor calificadas</option>
+              <option value="upcoming">🗓 Próximos estrenos</option>
+              <option value="now_playing">🎬 En cartelera</option>
+            </select>
+          </div>
+
+          <div class="explorar-field">
+            <label class="explorar-label" for="language">Idioma</label>
+            <select id="language" class="explorar-select">
+              <option value="es-MX">🇲🇽 Español (MX)</option>
+              <option value="es-ES">🇪🇸 Español (ES)</option>
+              <option value="en-US">🇺🇸 English</option>
+              <option value="fr-FR">🇫🇷 Français</option>
+              <option value="pt-BR">🇧🇷 Português</option>
+            </select>
+          </div>
+
+          <div class="explorar-field">
+            <label class="explorar-label" for="page">Página</label>
+            <select id="page" class="explorar-select">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
+          </div>
+
+          <button id="btn1" type="submit" class="explorar-btn">
+            <span class="btn1-text">Buscar</span>
+            <span class="btn1-spinner" style="display:none">⏳</span>
+          </button>
+
+        </div>
+      </form>
+
+      <div id="explorar-empty" class="explorar-empty">
+        <div class="explorar-empty-icon">🎥</div>
+        <div class="explorar-empty-text">Elige una categoría y presiona Buscar</div>
+      </div>
+
+      <div id="output2" class="explorar-grid"></div>
+
+    </div>
+
+  </div>
+</div>
+
+<script src="config.js"></script>
+<script src="app.js"></script>
+<script src="pwa.js"></script>
+</body>
+</html>

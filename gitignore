@@ -1,0 +1,6 @@
+# ⚠️ Archivo con la API key real — NUNCA subir a GitHub
+config.js
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
