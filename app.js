@@ -1,6 +1,6 @@
 // API KEY y URL base
 const URL_BASE = 'https://api.themoviedb.org/3';
-const ID = '876077';
+const ID = '46434';
 
 // Cuando carga la página, traer los datos
 cargarPelicula();
@@ -12,6 +12,13 @@ async function cargarPelicula() {
 
         const pelicula = await respuestaPelicula.json();
         const credits  = await respuestaCredits.json();
+
+        // Si no hay sinopsis en español, buscarla en inglés
+        if (!pelicula.overview) {
+            const respuestaEN = await fetch(`${URL_BASE}/movie/${ID}?api_key=${API_KEY}&language=en-US`);
+            const peliculaEN  = await respuestaEN.json();
+            pelicula.overview = peliculaEN.overview;
+        }
 
         if (pelicula.backdrop_path) {
             document.getElementById('backdrop-bg').style.backgroundImage =
@@ -84,10 +91,10 @@ function mostrarInfo(pelicula) {
         </div>
 
         <div class="details-row">
-            <div class="detail-item"><div class="stat-label">Estreno</div><div class="detail-value">${fecha}</div></div>
-            <div class="detail-item"><div class="stat-label">Presupuesto</div><div class="detail-value">${pelicula.budget > 0 ? '$' + pelicula.budget.toLocaleString() : 'N/D'}</div></div>
-            <div class="detail-item"><div class="stat-label">Recaudación</div><div class="detail-value">${pelicula.revenue > 0 ? '$' + pelicula.revenue.toLocaleString() : 'N/D'}</div></div>
-            <div class="detail-item"><div class="stat-label">Sitio oficial</div><div class="detail-value">${pelicula.homepage ? `<a href="${pelicula.homepage}" target="_blank" style="color:var(--accent);text-decoration:none">Visitar →</a>` : 'N/D'}</div></div>
+            <div class="detail-item">
+                <div class="stat-label">Estreno</div>
+                <div class="detail-value">${fecha}</div>
+            </div>
         </div>
     `;
 }
@@ -234,9 +241,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const output2  = document.getElementById('output2');
 
         // Estado: cargando
-        btn.disabled   = true;
-        btnText.style.display  = 'none';
-        spinner.style.display  = 'inline';
+        btn.disabled          = true;
+        btnText.style.display = 'none';
+        spinner.style.display = 'inline';
 
         try {
             const resultado = await masFuncion();
@@ -251,7 +258,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             for (let i = 0; i < resultado.results.length; i++) {
-                const item  = resultado.results[i];
+                const item   = resultado.results[i];
                 const titulo = item.title || item.name || 'Sin título';
                 const review = item.overview || 'Sin descripción disponible.';
                 const rating = item.vote_average ? item.vote_average.toFixed(1) : '—';
@@ -280,7 +287,6 @@ document.addEventListener('DOMContentLoaded', () => {
             empty.style.display = 'flex';
             empty.querySelector('.explorar-empty-text').textContent = 'Error al cargar. Revisa tu conexión.';
         } finally {
-            // Restaurar botón
             btn.disabled          = false;
             btnText.style.display = 'inline';
             spinner.style.display = 'none';
