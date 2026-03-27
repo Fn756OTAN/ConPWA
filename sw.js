@@ -43,7 +43,7 @@ self.addEventListener('fetch', event => {
         const cached = await cache.match(event.request);
         if (cached) return cached;
         try {
-          const response = await fetch(event.request);
+          const response = await fetch(event.request.clone());
           if (response.ok) cache.put(event.request, response.clone());
           return response;
         } catch {
